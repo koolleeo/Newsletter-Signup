@@ -54,7 +54,12 @@ const options = {
 
 // make HTTPS request and save as const
 const request = https.request(url, options, function(response){
+
+    // capture response code
+    const status = response.statusCode;
+
     response.on("data", function(data){
+
         const parsedData = JSON.parse(data);
         
         //log to console to validate 
@@ -63,7 +68,8 @@ const request = https.request(url, options, function(response){
         // log to page to validate within browser
         res.send(parsedData);
 
-    })
+        })
+
 })
 
 // POST input jsonData to mailchimp
