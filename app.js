@@ -2,12 +2,16 @@ const express = require('express');
 const request = require('request');
 const bodyParser = require('body-parser');
 
+// initialise express instance
 const app = express();
 
-app.use('/', function(req, res){
-    res.send('<h1>Server is now up and running</h1>');
-})
+// use static function to enable use of static folder
+app.use(express.static("public"));
 
+// render sign up html page at the route /
+app.get('/', function(req, res){
+    res.sendFile(`${__dirname}/signup.html`);
+})
 
 app.listen(3000, function(){
     console.log('Server is now running on port 3000');
