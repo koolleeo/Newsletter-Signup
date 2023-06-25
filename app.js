@@ -55,26 +55,31 @@ const options = {
 // make HTTPS request and save as const
 const request = https.request(url, options, function(response){
 
-    // capture response code
-    const status = response.statusCode;
+// capture response code
+const status = response.statusCode;
 
-    response.on("data", function(data){
+// check status code and render success or failure HTML file
+if (status === 200) {
 
-        const parsedData = JSON.parse(data);
-        
-        //log to console to validate 
-        console.log(parsedData);
+    res.sendFile(`${__dirname}/success.html`);
 
-        // log to page to validate within browser
-        res.send(parsedData);
+} else {
 
-        })
+    res.sendFile(`${__dirname}/failure.html`);
+}
 
-})
+    })
 
 // POST input jsonData to mailchimp
 request.write(jsonData);
 request.end();
+
+})
+
+// redirect to home route if try again button pressed
+app.post('/failure', function(req, res){
+
+    res.redirect('/');
 
 })
 
